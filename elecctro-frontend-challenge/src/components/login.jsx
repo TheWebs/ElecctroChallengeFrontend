@@ -77,7 +77,8 @@ function Login() {
                     password,
                   }, {
                     withCredentials: true,
-                  }).then(() => {
+                  }).then((result) => {
+                    axios.defaults.headers.common = { Authorization: `Bearer ${result.data}` };
                     tryLogin();
                   }).catch(() => {
                     Swal.fire('Ups ...', 'Dados de login inválidos!', 'error');

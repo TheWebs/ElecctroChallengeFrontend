@@ -7,7 +7,6 @@ const TodosAppContextProvider = ({ children }) => {
   const [showRegister, setShowRegister] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({});
-  const [todos, setTodos] = useState([]);
   const [token, setToken] = useState(undefined);
 
   const getCookie = (cname) => {
@@ -56,10 +55,6 @@ const TodosAppContextProvider = ({ children }) => {
     }
   };
 
-  const setTodoList = (newTodos) => {
-    setTodos(newTodos);
-  };
-
   const setUser = (user) => {
     setUserData(user);
   };
@@ -79,8 +74,6 @@ const TodosAppContextProvider = ({ children }) => {
       userData,
       setUser,
       getTokenFromCookies,
-      todos,
-      setTodoList,
       token,
       setUserToken,
     }}
