@@ -2,5 +2,8 @@
 // Copy this file, and add rule overrides as needed.
 {
     "extends": "airbnb",
+    "rules": {
+      "react/prop-types": 0
+    },
     "ignorePatterns": ["index.js", "reportWebVitals.js"]
   }

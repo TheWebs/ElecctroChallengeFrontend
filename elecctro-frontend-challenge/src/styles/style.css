@@ -21,16 +21,18 @@ html {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
     transition: 0.3s;
     width: 40%;
-    display: flex;
+    display: block;
     align-items: center;
     height: 300px;
     background-color: white;
 }
 
 input {
-    width: 90%;
+    width: 40%;
     border: rgb(47, 41, 122) solid 2px;
-    border-radius: 20px;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
     padding: 5px;
 }
 
@@ -53,6 +55,10 @@ input:focus {
 
 .form-span {
     display: block;
+}
+
+.title {
+    text-align: center;
 }
 
 .form-button {
@@ -79,6 +85,11 @@ textarea:focus, input:focus{
     background-color: rgb(24, 105, 197);
 }
 
+.form-button:disabled {
+    background-color: gray;
+    cursor: initial;
+}
+
 a {
     color: rgb(47, 41, 122);
 }
@@ -91,4 +102,34 @@ form {
     text-align: center;
     padding: 10px;
     margin: 0 auto;
+    position: relative;
+    top: 15%;
 }
+
+.loader {
+    position: absolute;
+    left: calc(50% - 120px);
+    top: calc(50% - 120px);
+    border: 16px solid transparent;
+    border-radius: 50%;
+    border-top: 16px solid white;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .error {
+      color: rgb(214, 22, 22);
+  }

@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import TodosAppContextProvider from './contexts/todosAppContext'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <TodosAppContextProvider>
+      <App />
+    </TodosAppContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
