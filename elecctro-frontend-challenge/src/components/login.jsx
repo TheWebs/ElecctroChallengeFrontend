@@ -29,8 +29,11 @@ function Login() {
           console.log('Token found not valid');
           setLoading(false);
         }
-      } catch (err) {
-        console.log(err);
+      } catch (error) {
+        if (error.response.status === 401) {
+          setLoggedIn(false);
+          setLoading(false);
+        }
       }
     } else {
       console.log('Token not found');

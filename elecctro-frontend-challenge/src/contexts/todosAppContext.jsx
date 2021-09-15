@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react';
+import Swal from 'sweetalert2';
 
 export const TodosAppContext = createContext();
 
@@ -63,6 +64,17 @@ const TodosAppContextProvider = ({ children }) => {
     setToken(userToken);
   };
 
+  const handleServerErrors = async (error) => {
+    if (error.response.status === 401) {
+      Swal.fire('Ups ...', 'A sua sessão expirou!', 'error');
+      setLoggedIn(false);
+    } else if (error.response.status === 400) {
+      Swal.fire('Dados inválidos', 'Os dados que inseriu são inválidos.', 'error');
+    } else {
+      Swal.fire('Ups ...', 'Algo correu mal.', 'error');
+    }
+  };
+
   return (
     <TodosAppContext.Provider value={{
       showLogin,
@@ -76,6 +88,7 @@ const TodosAppContextProvider = ({ children }) => {
       getTokenFromCookies,
       token,
       setUserToken,
+      handleServerErrors,
     }}
     >
       {
