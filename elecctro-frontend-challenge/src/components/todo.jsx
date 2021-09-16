@@ -17,6 +17,12 @@ function Todo({ todo, setTodos, todos }) {
       setEditing(false);
       return;
     }
+    if (description.trim().length < 2) {
+      Swal.fire('Erro', 'Uma tarefa precisa no mínimo de 2 caracteres.', 'error');
+      setDescription(todo.description);
+      setEditing(false);
+      return;
+    }
     axios.patch(`/todo/${todo.taskId}`, {
       description,
     }, {
@@ -105,6 +111,9 @@ function Todo({ todo, setTodos, todos }) {
           onKeyUp={(event) => {
             if (event.code === 'Enter') {
               editTodo();
+            } else if (event.code === 'Escape') {
+              setDescription(todo.description);
+              setEditing(false);
             }
           }}
           type={editing ? 'text' : 'hidden'}
