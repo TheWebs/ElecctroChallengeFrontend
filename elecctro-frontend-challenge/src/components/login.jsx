@@ -22,23 +22,40 @@ function Login() {
       try {
         const result = await axios.get('/me');
         if (result.status === 200) {
-          console.log('Token found and valid');
+          /* console.log('Token found and valid'); */
           setUser(result.data);
           setLoggedIn(true);
         } else {
-          console.log('Token found not valid');
+          /* console.log('Token found not valid'); */
           setLoading(false);
         }
       } catch (error) {
+        if (!error.response) {
+          return;
+        }
         if (error.response.status === 401) {
           setLoggedIn(false);
           setLoading(false);
         }
       }
     } else {
-      console.log('Token not found');
+      /* console.log('Token not found'); */
       setLoading(false);
     }
+  };
+
+  const login = () => {
+    axios.post('/login', {
+      email,
+      password,
+    }, {
+      withCredentials: true,
+    }).then((result) => {
+      axios.defaults.headers.common = { Authorization: `Bearer ${result.data}` };
+      tryLogin();
+    }).catch(() => {
+      Swal.fire('Ups ...', 'Dados de login inválidos!', 'error');
+    });
   };
 
   useEffect(() => {
@@ -65,6 +82,11 @@ function Login() {
                 onChange={(event) => {
                   setPassword(event.currentTarget.value);
                 }}
+                onKeyUp={(event) => {
+                  if (event.code === 'Enter') {
+                    login();
+                  }
+                }}
                 className="form-field password"
                 placeholder="Password"
                 id="password"
@@ -75,17 +97,7 @@ function Login() {
                 className="form-button text-white"
                 onClick={(e) => {
                   e.preventDefault();
-                  axios.post('/login', {
-                    email,
-                    password,
-                  }, {
-                    withCredentials: true,
-                  }).then((result) => {
-                    axios.defaults.headers.common = { Authorization: `Bearer ${result.data}` };
-                    tryLogin();
-                  }).catch(() => {
-                    Swal.fire('Ups ...', 'Dados de login inválidos!', 'error');
-                  });
+                  login();
                 }}
               >
                 Entrar

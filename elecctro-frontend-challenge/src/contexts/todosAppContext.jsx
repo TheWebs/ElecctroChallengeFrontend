@@ -7,6 +7,7 @@ const TodosAppContextProvider = ({ children }) => {
   const [showLogin, setShowLogin] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const [userData, setUserData] = useState({});
   const [token, setToken] = useState(undefined);
 
@@ -46,12 +47,21 @@ const TodosAppContextProvider = ({ children }) => {
     setShowLogin(false);
   };
 
+  const openProfile = () => {
+    setShowProfile(true);
+  };
+
+  const closeProfile = () => {
+    setShowProfile(false);
+  };
+
   const setLoggedIn = (value) => {
     setIsLoggedIn(value);
     if (value) {
       setShowRegister(false);
       setShowLogin(false);
     } else {
+      setShowProfile(false);
       setShowLogin(true);
     }
   };
@@ -64,14 +74,19 @@ const TodosAppContextProvider = ({ children }) => {
     setToken(userToken);
   };
 
+  const validateEmail = (emailToValidate) => {
+    if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(emailToValidate)) {
+      return true;
+    }
+    return false;
+  };
+
   const handleServerErrors = async (error) => {
     if (error.response.status === 401) {
       Swal.fire('Ups ...', 'A sua sessão expirou!', 'error');
       setLoggedIn(false);
-    } else if (error.response.status === 400) {
-      Swal.fire('Dados inválidos', 'Os dados que inseriu são inválidos.', 'error');
     } else {
-      Swal.fire('Ups ...', 'Algo correu mal.', 'error');
+      Swal.fire('Ups ...', error.response.data.error, 'error');
     }
   };
 
@@ -81,6 +96,9 @@ const TodosAppContextProvider = ({ children }) => {
       openLogin,
       showRegister,
       openRegister,
+      openProfile,
+      closeProfile,
+      showProfile,
       isLoggedIn,
       setLoggedIn,
       userData,
@@ -89,6 +107,7 @@ const TodosAppContextProvider = ({ children }) => {
       token,
       setUserToken,
       handleServerErrors,
+      validateEmail,
     }}
     >
       {

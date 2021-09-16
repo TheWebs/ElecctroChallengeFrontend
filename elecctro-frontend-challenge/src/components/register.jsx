@@ -8,7 +8,7 @@ import '../styles/style.css';
 
 function Register() {
   const {
-    openLogin, getTokenFromCookies, setUser, setLoggedIn,
+    openLogin, getTokenFromCookies, setUser, setLoggedIn, validateEmail,
   } = useContext(TodosAppContext);
 
   const [email, setEmail] = useState('');
@@ -26,35 +26,28 @@ function Register() {
       try {
         const result = await axios.get('/me');
         if (result.status === 200) {
-          console.log('Token found and valid');
+          /* console.log('Token found and valid'); */
           setUser(result.data);
           setLoggedIn(true);
         } else {
-          console.log('Token found not valid');
+          /* console.log('Token found not valid'); */
           setLoading(false);
         }
       } catch (err) {
-        console.log(err);
+        /* console.log(err); */
       }
     } else {
-      console.log('Token not found');
+      /* console.log('Token not found'); */
       setLoading(false);
     }
   };
 
   const emptyFields = () => (name === '' || email === '' || password === '');
 
-  const validateEmail = (emailToValidate) => {
-    if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(emailToValidate)) {
-      return true;
-    }
-    return false;
-  };
-
   return (
     <div>
       <h1 className="text-white title">Registar</h1>
-      <div className="login-card card">
+      <div className="register-card card">
         <form>
           <input
             onChange={(event) => {
