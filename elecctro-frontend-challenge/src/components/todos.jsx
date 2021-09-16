@@ -56,6 +56,10 @@ function Todos() {
   };
 
   const createTodo = () => {
+    if (newTodo.trim().length < 2) {
+      Swal.fire('Erro', 'Uma tarefa precisa no mínimo de 2 caracteres.', 'error');
+      return;
+    }
     axios.post('/todos', {
       description: newTodo,
     }, {
